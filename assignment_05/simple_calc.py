@@ -62,7 +62,11 @@ operators = {
     "+" : operator.add,
     "-" : operator.sub,
     "*" : operator.mul,
-    "/" : operator.truediv
+    "/" : operator.truediv,
+    ">>": operator.rshift,
+    "<<": operator.lshift,
+    "%" : operator.mod,
+    "**": operator.pow
 }
 
 # ------------------------------------------------------------------------
@@ -72,9 +76,9 @@ operators = {
 def get_user_input():
     ''' Will return (number, number, operator) or (none, none, none) on error '''
     try:
-        number1 = float(input("Enter the first number:   "))
-        number2 = float(input("Enter the second number:  "))
-        op      = input("Enter an operator (Valid operators are +, -, *, and /):  ")
+        number1 = int(input("Enter the first number:   "))
+        number2 = int(input("Enter the second number:  "))
+        op      = input("Enter an operator (Valid operators are +, -, *, /, >>, <<, %, **):  ")
         
         return (number1, number2, op)
     except Exception as e:
