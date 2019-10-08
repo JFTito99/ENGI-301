@@ -49,6 +49,12 @@ Error Conditions
 --------------------------------------------------------------------------
 """
 import operator
+#import builtins
+#from builtins import input
+try:
+    input = raw_input
+except NameError:
+    pass
 
 # ------------------------------------------------------------------------
 # Constants
