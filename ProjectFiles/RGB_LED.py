@@ -16,6 +16,9 @@ def fade(colorA, colorB, ignore_color):
 	    PWM.set_duty_cycle(colorA, i)
 	    PWM.set_duty_cycle(colorB, 100-i)
 	    time.sleep(0.05)
+def cleanup():
+    """Set up the hardware components."""
+    PWM.cleanup()
 	
 while True:
     try:

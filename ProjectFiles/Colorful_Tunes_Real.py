@@ -51,6 +51,7 @@ import time         #  A library
 import Adafruit_BBIO.ADC as ADC   #For the potentiometer
 import Adafruit_BBIO.PWM as PWM   #For Motor control and RGB Control
 
+import LetterWriterThingy as LetterWriterThingy   #Importing the Code
 #For the color sensor
 #import board
 #import busio
@@ -100,6 +101,8 @@ debug                   = True    #to turn on and off print statements
 def setup():
     #global sensor
     ADC.setup()
+    #LetterWriterThingy.display_setup()
+    #LetterWriterThingy.update_display(0)
     
 def cleanup():
     """Set up the hardware components."""
@@ -141,6 +144,21 @@ class Motor(threading.Thread):
         #print("Run Run as fast as you can you")
         
     def hexDisplay(self):
+        Lento   = [3,2,4,8]
+        Andante = [0,4,1,0]
+        Allegro = [0,3,3,2]
+        Presto  = [5,6,2,7]
+        angle           = ADC.read(self.adcPin) * 100
+        if angle < 25:
+            value = Lento
+        elif (angle>25) and (angle<50):
+	        value = Andante
+        elif (angle>50) and (angle<75):
+            value = Allegro
+        else:
+            value = Presto
+            
+        LetterWriterThingy.update_display(value)
         print("double double toil and trouble")
         
 
@@ -151,7 +169,7 @@ class Motor(threading.Thread):
         try:
             PWM.start(self.motorPin, (100 - self.motor_duty_min), self.motor_pwm_frequency)
             while True:
-                self.set_motor_speed()
+                #self.set_motor_speed()
                 time.sleep(self.motor_update_time)
                 self.hexDisplay()
         except KeyboardInterrupt:       #Control c to end the program
@@ -198,6 +216,7 @@ class Color_Sensor_Class(threading.Thread):
 
 if __name__ == '__main__':
     setup()
+    LetterWriterThingy.ada_setup
     t1 = Motor(adcPin = ANALOG_INPUT, motorPin= MOTOR_OUTPUT)
     t2 = Color_Sensor_Class()
     t1.start()   #Function call so open and close those parentheses
@@ -210,6 +229,7 @@ if __name__ == '__main__':
                 t.join()   #Wait for thread to finish
     except KeyboardInterrupt:
         PWM.stop(MOTOR_OUTPUT)
+    LetterWriterThingy.ada_cleanup
         
     
     

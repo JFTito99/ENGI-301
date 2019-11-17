@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 --------------------------------------------------------------------------
-HT16K33 I2C Library
+LetterWriterThingy I2C Library
 --------------------------------------------------------------------------
 License:   
-Copyright 2018 Erik Welsh
+Copyright 2019 Jorge Tito
 
 Redistribution and use in source and binary forms, with or without 
 modification, are permitted provided that the following conditions are met:
@@ -34,7 +34,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Software API:
 
   * update_display(value)
-      - Update the value on the display.  Value must be between 0 and 9999. 
+      - Update the value on the display.  Value is based on the words for tempo:
+        lento, Andante, Allegro, and Presto
+  * 
   
 --------------------------------------------------------------------------
 Background Information: 
@@ -50,9 +52,11 @@ Background Information:
         * https://github.com/adafruit/Adafruit_Python_LED_Backpack/blob/master/Adafruit_LED_Backpack/HT16K33.py
         * https://github.com/adafruit/Adafruit_Python_LED_Backpack/blob/master/Adafruit_LED_Backpack/SevenSegment.py
         * https://github.com/adafruit/Adafruit_Python_LED_Backpack/blob/master/examples/sevensegment_test.py
+    Special thanks to Eric Welsh
 
 """
 import os
+import Adafruit_BBIO.ADC as ADC   #For the potentiometer
 
 
 # ------------------------------------------------------------------------
@@ -64,6 +68,7 @@ DISPLAY_I2C_BUS              = 2                 # I2C 1
 DISPLAY_I2C_ADDR             = 0x70
 DISPLAY_CMD                  = "/usr/sbin/i2cset -y 2 0x70"         
 
+ANALOG_INPUT = "P1_19"                      # AIN0 from potentiometer
 
 # ------------------------------------------------------------------------
 # Display Library
@@ -98,6 +103,7 @@ HT16K33_BRIGHTNESS_HIGHEST  = 0x0F
 HT16K33_BRIGHTNESS_DARKEST  = 0x00
 
 
+
 def display_setup():
     """Setup display"""
     # i2cset -y 0 0x70 0x21
@@ -108,6 +114,13 @@ def display_setup():
     os.system("{0} {1}".format(DISPLAY_CMD, (HT16K33_BRIGHTNESS_CMD | HT16K33_BRIGHTNESS_HIGHEST)))
 #end def
 
+def ada_setup():
+    #global sensor
+    ADC.setup()
+
+def ada_cleanup(self):
+    """Set up the hardware components."""
+    i2c.deinit()
 
 def display_clear():
     """Clear the display to read '0000'"""
@@ -183,10 +196,10 @@ def update_display(value):
     #dog3 = (value // 100) % 10   #third to last
     #dog4 = (value // 1000) % 10  #first digit
     
-    display_set_digit(3, value, double_point=False)
-    display_set_digit(2, value, double_point=False)
-    display_set_digit(1, value, double_point=False)
-    display_set_digit(0, value, double_point=False)
+    display_set_digit(3, value[3], double_point=False)
+    display_set_digit(2, value[2], double_point=False)
+    display_set_digit(1, value[1], double_point=False)
+    display_set_digit(0, value[0], double_point=False)
     #raise ValueError("Function not implemented.")
 
 #End def
@@ -200,14 +213,44 @@ def update_display(value):
 if __name__ == '__main__':
     import time
 
-    delay = 5
+    delay = 1
     
     print("Test HT16K33 Display:")
 
     display_setup()
     
-    update_display(3)
-    time.sleep(delay)
+    Lento   = [3,2,4,8]
+    Andante = [0,4,1,0]
+    Allegro = [0,3,3,2]
+    Presto  = [5,6,2,7]
+    #update_display(Lento)
+    #time.sleep(delay)
+    #update_display(Andante)
+    #time.sleep(delay)
+    #update_display(Allegro)
+    #time.sleep(delay)
+    #update_display(Presto)
+    #time.sleep(delay)
+    
+    ada_setup()
+    
+    
+    while True:
+        angle  = ADC.read(ANALOG_INPUT) * 100
+        if angle < 25:
+            value = Lento
+        elif (angle>25) and (angle<50):
+            value = Andante
+        elif (angle>50) and (angle<75):
+            value = Allegro
+        else:
+            value = Presto
+        print (value)
+        update_display(value)
+        time.sleep(delay)
+        
+    
+
     
 
     display_clear()    
