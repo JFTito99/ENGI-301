@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 --------------------------------------------------------------------------
-Servo Control using a Potentiometer
+Colorful Tunes Driver Function
 --------------------------------------------------------------------------
 License:   
 Copyright 2019 - Jorge Tito
@@ -29,11 +29,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Purpose: Read in colors from a moving wheel and outputting a color on an RGB
 LED.
 
+Future Innovation: Translate those same colors to a specific musical tone
+Reconcile pythonBoard library with BBIO library
+
+Potentiometer Input pin: P1_19
+Motor Output Pin: P1_36
+
+Red PWM controller:   P2_1
+Green PWM controller: P2_3
+Blue PWM controller:  P1_33
+
 
 --------------------------------------------------------------------------
 Background:
   - https://adafruit-beaglebone-io-python.readthedocs.io/en/latest/ADC.html
   - https://learn.adafruit.com/controlling-a-servo-with-a-beaglebone-black/writing-a-program
+  - https://www.oreilly.com/library/view/beaglebone-cookbook/9781491915660/ch04.html
 """
 import threading    #To make everything work smoothly
 
@@ -67,27 +78,9 @@ debug                   = True    #to turn on and off print statements
 
 
 
-#Color Sensor Variables
-#sensor = None      #Blank, give us a debuggable error
-#i2c = None
-
-
 # ------------------------------------------------------------------------
 # Functions/Objects
 # ------------------------------------------------------------------------
-#def setup():
-#    """Set up the hardware components."""
- #   #global sensor, i2c   #Use global variable for sensor Use what is already previously defined by others
-  #  
-   # global sensor
-    #
-    #ADC.setup()
-    #For Color Sensor
-    #i2c = busio.I2C(board.SCL, board.SDA)
-    #sensor = adafruit_tcs34725.TCS34725(i2c)
-    
-# end def
-
 #"This is the motor class"
 #"Contains: set_motor_speed, hexDisplay
 
