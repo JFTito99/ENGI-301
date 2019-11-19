@@ -5,6 +5,7 @@ LetterWriterThingy I2C Library
 --------------------------------------------------------------------------
 License:   
 Copyright 2019 Jorge Tito
+Modified from code by Erick Welsh
 
 Redistribution and use in source and binary forms, with or without 
 modification, are permitted provided that the following conditions are met:
