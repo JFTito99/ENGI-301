@@ -5,7 +5,7 @@ https://learn.adafruit.com/adafruit-color-sensors/downloads
 """
 """
 --------------------------------------------------------------------------
-LetterWriterThingy I2C Library
+Just a color sensor
 --------------------------------------------------------------------------
 License:   
 Copyright 2019 Jorge Tito
@@ -74,7 +74,7 @@ def colorSensorReader(RED,GREEN,BLUE):
     red,green,blue = dog
     Colors = [red,green,blue]      #Vectorized to use in for loops
 
-    PWM.set_duty_cycle(RED, 100-Colors[0])   # Red
+    PWM.set_duty_cycle(RED, 100-Colors[0])   # Red      Important to make these opposite, as the light emits what the sensor does not pick up
     PWM.set_duty_cycle(GREEN, 100-Colors[1])   # Green
     PWM.set_duty_cycle(BLUE, 100-Colors[2])   # Blue
 
