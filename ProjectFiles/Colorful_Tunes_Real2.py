@@ -4,7 +4,7 @@
 Servo Control using a Potentiometer
 --------------------------------------------------------------------------
 License:   
-Copyright 2019 - <NAME>
+Copyright 2019 - Jorge Tito
 Redistribution and use in source and binary forms, with or without 
 modification, are permitted provided that the following conditions are met:
 1. Redistributions of source code must retain the above copyright notice, 
@@ -26,10 +26,10 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------
-Control a servo using a potentiometer
-  - Potentiometer connected to AIN0 (P1_19)
-  - Servo Connected to PWM (P1_36)
-When potentiometer is changed, this will change the corresponding servo location
+Purpose: Read in colors from a moving wheel and outputting a color on an RGB
+LED.
+
+
 --------------------------------------------------------------------------
 Background:
   - https://adafruit-beaglebone-io-python.readthedocs.io/en/latest/ADC.html
