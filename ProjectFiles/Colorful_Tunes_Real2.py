@@ -174,7 +174,7 @@ class Color_Sensor_Class(threading.Thread):
         red, green, blue = self.sensor.color_rgb_bytes
         Colors = [red,green,blue]      #Vectorized
 
-        PWM.set_duty_cycle(self.redPin, 100-Colors[0])   # Red
+        PWM.set_duty_cycle(self.redPin, 100-Colors[0])   # Red: Has to be this way because emitters do the opposite of what readers do
         PWM.set_duty_cycle(self.greenPin, 100-Colors[1])   # Green
         PWM.set_duty_cycle(self.bluePin, 100-Colors[2])   # Blue
         print("REd, GrEeN, BlUe")
